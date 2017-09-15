@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="d4f64188-84c0-4f72-a3b5-d837c9e72fcb" name="Microsoft" url="http://newsletter.onetec.eu">
+        <fileTransfer explicitFtps="false" host="51.255.83.80" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -76,7 +76,7 @@ class Model
      */
     public function getSong($song_id)
     {
-        $sql = "SELECT id, artist, track, link FROM song WHERE id = :song_id LIMIT 1";
+        $sql = "SELECT TOP 1 id, artist, track, link FROM song WHERE id = :song_id ORDER BY id ASC";
         $query = $this->db->prepare($sql);
         $parameters = array(':song_id' => $song_id);
 

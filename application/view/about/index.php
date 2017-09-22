@@ -1,8 +1,14 @@
 <div class="container px-0">
     <div class="row">
         <div class="col-md-12">
+            <h1 class="bold">EASYCAKE</h1>
             <h1>About this framework</h1>
             <p class="text-justify">
+                THIS IS REAL, THE EASYCAKE MVC HAS BEEN DONE.<br />
+                IT IS READY FOR REALY LIFE OUT THERE.<br />
+                IT IS WORKING, SAFE, SECURE, SIMPLE AND SEXY.<br />
+                USE IT WITH CAUTION, DO NOT DIVISE BY 0.<br />
+                <br />
                 This barebone framework is based on <a href="https://github.com/panique/mini">MINI</a> and is
                 <strong>MVC</strong> structured.<br />
                 It is meant to simplify a developers' job when creating a website and not have to reinvent
@@ -103,7 +109,7 @@
     }
             </pre>
             <p class="text-justify">
-                <strong>Working with data</strong>
+                <strong>Working with data</strong><br />
                 Let's look into the index()-method in the home-controller (application/controllers/home.php):<br />
                 Similar to exampleOne, but here we also request data.<br />
                 Again, everything is extremely reduced and simple:<br />

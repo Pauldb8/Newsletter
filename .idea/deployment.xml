@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="Microsoft" showNewOnTargetInSync="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="Microsoft" uploadOnCheckin="d4f64188-84c0-4f72-a3b5-d837c9e72fcb" showNewOnTargetInSync="false">
     <serverData>
       <paths name="Microsoft">
         <serverdata>
@@ -10,6 +10,7 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myUploadOnCheckinName" value="Microsoft" />
     <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

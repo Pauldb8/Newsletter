@@ -19,6 +19,7 @@ class Controller
     {
         $this->openDatabaseConnection();
         $this->loadModel();
+        $this->loadLanguage();
     }
 
     /**
@@ -30,7 +31,11 @@ class Controller
         // "objects", which means all results will be objects, like this: $result->user_name !
         // For example, fetch mode FETCH_ASSOC would return results like this: $result["user_name] !
         // @see http://www.php.net/manual/en/pdostatement.fetch.php
-        $options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING);
+        if (ENVIRONMENT == 'development' || ENVIRONMENT == 'dev') {
+            $options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+        }else{
+            $options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING);
+        }
 
         // generate a database connection, using the PDO connector
         // @see http://net.tutsplus.com/tutorials/php/why-you-should-be-using-phps-pdo-for-database-access/
@@ -43,8 +48,23 @@ class Controller
      */
     public function loadModel()
     {
-        require APP . 'model/model.php';
+        function loadClass($classname)
+        {
+            require APP . 'model/' . $classname . '.php';
+        }
+        spl_autoload_register('loadClass');
+
+        require APP . 'model/Model.php';
         // create new "model" (and pass the database connection)
-        $this->model = new Model($this->db);
+        $this->model = new model($this->db);
+    }
+
+    public function loadLanguage(){
+        if(isset($_SESSION['easy_language'])){
+            require APP . 'model/Strings.' . $_SESSION['easy_language'] . '.php';
+        }else{
+            $_SESSION['easy_language'] = 'eng';
+            require APP . 'model/Strings.' . $_SESSION['easy_language'] . '.php';
+        }
     }
 }

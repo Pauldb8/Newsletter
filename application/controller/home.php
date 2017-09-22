@@ -16,6 +16,7 @@ class Home extends Controller
      */
     public function index()
     {
+        $users = $this->model->getAll(new User());
         // load views
         require APP . 'view/_templates/header.php';
         require APP . 'view/home/index.php';
@@ -23,34 +24,21 @@ class Home extends Controller
     }
 
     /**
-     * PAGE: exampleone
-     * This method handles what happens when you move to http://yourproject/home/exampleone
-     * The camelCase writing is just for better readability. The method name is case-insensitive.
+     * Viewing newsletter for this user, if id is defined
      */
-    public function exampleOne()
+    public function newsletter($user_id)
     {
-        // load views
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/home/example_one.php';
-        require APP . 'view/_templates/footer.php';
-    }
-
-    /**
-     * PAGE: exampletwo
-     * This method handles what happens when you move to http://yourproject/home/exampletwo
-     * The camelCase writing is just for better readability. The method name is case-insensitive.
-     */
-    public function exampleTwo()
-    {
-        // load views
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/home/example_two.php';
-        require APP . 'view/_templates/footer.php';
-    }
-
-    public function exampleThree(){
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/home/example_three.php';
-        require APP . 'view/_templates/footer.php';
+//        if(isset($user_id)) {
+//            /* load newsletters from this user */
+//            $newsToGet = new Newsletter();
+//            $newsToGet.setFkUserId()
+//            $newsletters = $this->model->get()
+//            // load views
+//            require APP . 'view/_templates/header.php';
+//            require APP . 'view/home/newsletter.php';
+//            require APP . 'view/_templates/footer.php';
+//        }else{
+//            header('Location: ' . URL . 'home/index');
+//        }
     }
 }

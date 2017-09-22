@@ -1,6 +1,8 @@
 body {
     font-family: Arial;
     font-size: 14px;
+    max-width: 972px;
+    margin: auto;
 }
 .logo {
     font-size: 100px;
@@ -40,10 +42,13 @@ h1,h2,h3,h4,h5,h6{
     margin: 33px;
 }
 .container a {
-    color: #222;
 }
 .container table {
-    font-size: 11px;
+    /*font-size: 11px;*/
+    color: #000000;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    line-height: 1.3;
     margin-top: 20px;
 }
 .container table thead td {
@@ -72,14 +77,46 @@ h1,h2,h3,h4,h5,h6{
     color: #fff;
 }
 .container button {
-    background-color: #ccc;
+    /*background-color: #ccc;
     border: 0;
     padding: 5px 10px;
-    cursor: pointer;
+    cursor: pointer;*/
 }
 .container button:hover {
+    color: #222;
+    background: transparent;
+}
+.btn-black{
+    font-family: arial;
+    font-weight: bold;
+    color: white;
     background-color: #222;
-    color: #fff;
+    border: 0px;
+    border-radius: 0px;
+    padding: 10px 15px;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: 2px solid #222;
+    cursor: pointer;
+}
+.btn-black:hover{
+    background-color: transparent;
+    color: #222;
+}
+table.newsletter{
+    width: 700px;
+    margin: auto;
+    border: 1px solid #ccc;
+    padding: 0px;
+}
+table.newsletter td{
+    padding: 0px !important;
+}
+#loading{
+    display: none;
+}
+#mceu_11{
+    border: none !important;
 }
 .footer {
     padding: 20px;

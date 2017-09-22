@@ -15,12 +15,20 @@ class Model
     }
 
     /**
-     * Get all songs from database
+     * Get all from database, takes the class as input
      */
-    public function getAllSongs()
+    public function getAll($class)
     {
-        $sql = "SELECT id, artist, track, link FROM song";
+        /* building SQL query */
+        $sql = 'SELECT ';
+        foreach($class->getAttributes() as $key => $value){
+            $sql .= $key . ", ";
+        }
+        $sql = substr($sql, 0, -2); /* remove last ", " */
+        $sql .= ' FROM ' . $class::TABLE_NAME;
+
         $query = $this->db->prepare($sql);
+
         $query->execute();
 
         // fetchAll() is the PDO method that gets all result rows, here in object-style because we defined this in
@@ -29,6 +37,117 @@ class Model
         // $options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC ...
         return $query->fetchAll();
     }
+
+    /**
+     * Get from table, with parameter of value passed
+     */
+    public function get($class, $limit = 10000){
+        /* building SQL query */
+        $sql = 'SELECT TOP ' . $limit . ' * FROM ' . $class::TABLE_NAME . ' WHERE 1=1 ';
+        foreach($class->getAttributes() as $key => $value){
+            if($value != null){
+                $sql .= " AND " . $key . " = '" . $value . "'";
+            }
+        }
+
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_CLASS, get_class($class));
+    }
+
+    /**
+     * This add a class to the database, all null values will be passed as such
+     * This will generate this kind of request with a User class for example
+     * INSERT INTO Users (name, password, login) VALUES ('Popol', 'popol', 'popol')
+     */
+    public function add($class){
+        /* building SQL query */
+        $sql = 'INSERT INTO ' . $class::TABLE_NAME;
+        $columns = ' (';
+        $replace = ' (';
+        $values = Array();
+        foreach($class->getAttributes() as $key => $value){
+            if($value != null){
+                $columns .= $key . ', ';
+                $replace .= ':' . $key . ', ';
+                array_push($values, $value);
+            }
+        }
+        $columns = substr($columns, 0, -2); /* remove last ", " */
+        $replace = substr($replace, 0, -2);
+
+        $sql .= $columns . ') VALUES ' . $replace . ')';
+
+        try{
+            //echo '[ PDO DEBUG ]: ' . Helper::debugPDO($sql, $values);  exit();
+            $query = $this->db->prepare($sql);
+            $query->execute($values);
+            return true;
+        }catch(PDOException $exception){
+            return $exception->getMessage();
+        }
+    }
+
+    public function update($class){
+        /* Building SQL query */
+        $sql = "UPDATE " . $class::TABLE_NAME . " SET ";
+        $columns = "";
+        $values = Array();
+
+        /* Looping through all attributes */
+        foreach($class->getAttributes() as $key => $value){
+            if($value != null){
+                if($key != 'id'){
+                    $columns .= $key . ' = ';
+                    $columns .= ':' . $key . ', ';
+                    $values[':' . $key] = $value;
+                }
+            }
+        }
+
+        $columns = substr($columns, 0, -2); /* remove last ", " */
+        $sql .= $columns . " WHERE id = " . $class->getId();
+
+        $query = $this->db->prepare($sql);
+
+        // useful for debugging: you can see the SQL behind above construction by using:
+        /*echo '[ PDO DEBUG ]: ' . Helper::debugPDO($sql, $values);
+        echo "<pre>";
+        print_r ($values);
+        echo "</pre>";
+        //exit();*/
+
+        try{
+            $query->execute($values);
+            return true;
+        }catch(PDOException $exception){
+            return $exception->getMessage();
+        }
+    }
+
+    /**
+     * @param $class: it will use the ID of the class to know where to delete from
+     */
+    public function remove($class)
+    {
+        $sql = "DELETE FROM " . $class::TABLE_NAME . "  WHERE id = :id";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':id' => $class->getId());
+        try{
+            // useful for debugging: you can see the SQL behind above construction by using:
+            //echo '[ PDO DEBUG ]: ' . Helper::debugPDO($sql, $parameters);
+
+            if($query->execute($parameters))
+                return $query;
+            else
+                return $query->errorInfo();
+        }catch(PDOException $exception){
+            return $exception->getCode();
+            die();
+        }
+    }
+
+
 
     /**
      * Add a song to database

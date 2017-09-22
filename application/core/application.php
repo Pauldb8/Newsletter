@@ -17,6 +17,7 @@ class Application
      */
     public function __construct()
     {
+        session_start();
         // create array with URL parts in $url
         $this->splitUrl();
 

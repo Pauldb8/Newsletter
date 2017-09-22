@@ -52,4 +52,7 @@ class Helper
         return $raw_sql;
     }
 
+    static public function sanitize($var){
+        return htmlspecialchars($var, ENT_QUOTES, 'UTF-8');
+    }
 }

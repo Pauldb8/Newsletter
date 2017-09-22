@@ -18,7 +18,7 @@ class Songs extends Controller
     public function index()
     {
         // getting all songs and amount of songs
-        $songs = $this->model->getAllSongs();
+        $songs = $this->model->getAll(new Song());
         $amount_of_songs = $this->model->getAmountOfSongs();
 
        // load views. within the views we can echo out $songs and $amount_of_songs easily

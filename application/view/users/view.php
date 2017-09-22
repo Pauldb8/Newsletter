@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container px-0">
     <div class="row">
         <div class="col-md-12">
             <h1>Newsletter for <?php echo Helper::sanitize($user->getName()); ?></h1>
@@ -8,7 +8,7 @@
                 NEW
             </a>
             <?php echo AlertManager::show(); ?>
-            <table class="table table-hovered">
+            <table class="table table-hover">
                 <thead>
                 <tr>
                     <td>id</td>

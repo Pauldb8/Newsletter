@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container px-0">
     <div class="row">
         <div class="col-md-12">
             <h1>Add a new user</h1>

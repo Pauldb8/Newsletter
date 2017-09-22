@@ -17,28 +17,13 @@ class Home extends Controller
     public function index()
     {
         $users = $this->model->getAll(new User());
+        if(is_null($users))
+            header('Location: ' . APP . 'home/index');
+
         // load views
         require APP . 'view/_templates/header.php';
         require APP . 'view/home/index.php';
         require APP . 'view/_templates/footer.php';
     }
 
-    /**
-     * Viewing newsletter for this user, if id is defined
-     */
-    public function newsletter($user_id)
-    {
-//        if(isset($user_id)) {
-//            /* load newsletters from this user */
-//            $newsToGet = new Newsletter();
-//            $newsToGet.setFkUserId()
-//            $newsletters = $this->model->get()
-//            // load views
-//            require APP . 'view/_templates/header.php';
-//            require APP . 'view/home/newsletter.php';
-//            require APP . 'view/_templates/footer.php';
-//        }else{
-//            header('Location: ' . URL . 'home/index');
-//        }
-    }
 }

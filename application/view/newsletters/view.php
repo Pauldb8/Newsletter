@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container px-0">
     <div class="row">
         <div class="col-md-12">
             <h1>Newsletter "<strong><?php echo Helper::sanitize($newsletter->getTitle()); ?></strong>"</h1>

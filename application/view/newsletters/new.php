@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container px-0">
     <form action="<?php echo URL . "newsletters/add/" . Helper::sanitize($user->getId()); ?>"
           method="post"
           id="uploadimage"

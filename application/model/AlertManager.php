@@ -38,7 +38,6 @@ class AlertManager
             $i = 0;
             foreach($_SESSION['easy_errors'] as $error){
                 ?>
-                <br />
                 <div class="alert <?php echo $_SESSION['easy_errors_type'][$i]; ?>" role="alert">
                     <?php
                     switch($_SESSION['easy_errors_type'][$i]){

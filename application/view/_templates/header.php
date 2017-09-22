@@ -22,10 +22,12 @@
 <body>
     <!-- logo -->
     <div class="logo">
-        NEWSLETTER
+        NEWSLETTER<span class="number"> 1.0</span>
     </div>
 
     <!-- navigation -->
     <div class="navigation">
         <a href="<?php echo URL; ?>">home</a>
+        <a href="<?php echo URL . 'about'; ?>">about</a>
+        <a href="<?php echo URL . 'problem'; ?>">error page</a>
     </div>

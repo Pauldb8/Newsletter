@@ -15,31 +15,36 @@ class Model
     }
 
     /**
-     * Get all from database, takes the class as input
+     * Get all from database, takes the class as input,
+     * @returns Array($class) always
      */
     public function getAll($class)
     {
         /* building SQL query */
-        $sql = 'SELECT ';
+        $sql = 'SELECT * FROM ' . $class::TABLE_NAME . ' WHERE 1=1 ';
         foreach($class->getAttributes() as $key => $value){
-            $sql .= $key . ", ";
+            if($value != null){
+                $sql .= " AND " . $key . " = '" . $value . "'";
+            }
         }
-        $sql = substr($sql, 0, -2); /* remove last ", " */
-        $sql .= ' FROM ' . $class::TABLE_NAME;
 
-        $query = $this->db->prepare($sql);
+        try {
+            $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+            $query->execute();
 
-        $query->execute();
-
-        // fetchAll() is the PDO method that gets all result rows, here in object-style because we defined this in
-        // core/controller.php! If you prefer to get an associative array as the result, then do
-        // $query->fetchAll(PDO::FETCH_ASSOC); or change core/controller.php's PDO options to
-        // $options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC ...
-        return $query->fetchAll();
+            if($query)
+                return $query->fetchAll(PDO::FETCH_CLASS, get_class($class));
+            else
+                return null;
+        }catch(PDOException $exception){
+            return null;
+        }
     }
 
     /**
      * Get from table, with parameter of value passed
+     * @return $class if only 1 row
+     * @return Array($class) if more than 1 row
      */
     public function get($class, $limit = 10000){
         /* building SQL query */
@@ -50,9 +55,19 @@ class Model
             }
         }
 
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_CLASS, get_class($class));
+        try {
+            $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+            $query->execute();
+
+            if($query->rowCount() > 1)
+                return $query->fetchAll(PDO::FETCH_CLASS, get_class($class));
+            else if($query->rowCount() == 1)
+                return $query->fetchAll(PDO::FETCH_CLASS, get_class($class))[0];
+            else
+                return null;
+        }catch(PDOException $exception){
+            return null;
+        }
     }
 
     /**

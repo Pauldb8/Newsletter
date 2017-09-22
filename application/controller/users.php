@@ -24,8 +24,8 @@ class users extends Controller
             $userToGet = new User();
             $userToGet->setId($user_id);
 
-            $user = $this->model->get($userToGet)[0];
-            $newsletters = $this->model->get($newsToGet);
+            $user = $this->model->get($userToGet);
+            $newsletters = $this->model->getAll($newsToGet);
 
             if(is_null($user) || is_null($newsletters))
                 header('Location: ' . APP . 'home/index');
@@ -57,7 +57,10 @@ class users extends Controller
             $userToGet = new User();
             $userToGet->setId($user_id);
 
-            $user = $this->model->get($userToGet)[0];
+            $user = $this->model->get($userToGet);
+
+            if(is_null($user))
+                header('Location: ' . APP . 'home/index');
 
             require APP . 'view/_templates/header.php';
             require APP . 'view/users/edit.php';
@@ -99,7 +102,7 @@ class users extends Controller
             /* Getting user first */
             $userToGet = new User();
             $userToGet->setId($user_id);
-            $user = $this->model->get($userToGet)[0];
+            $user = $this->model->get($userToGet);
 
             /* Updating user with new information */
             $user->setName(Helper::sanitize($_POST['easy_name']));

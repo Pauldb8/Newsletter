@@ -25,8 +25,11 @@ class newsletters extends Controller
             $userToGet = new User();
             $userToGet->setId($user_id);
 
-            $user = $this->model->get($userToGet)[0];
-            $newsletter = $this->model->get($newsToGet)[0];
+            $user = $this->model->get($userToGet);
+            $newsletter = $this->model->get($newsToGet);
+
+            if(is_null($user) || is_null($newsletter))
+                header('Location: ' . APP . 'home/index');
 
             require APP . 'view/_templates/header.php';
             require APP . 'view/newsletters/view.php';
@@ -41,7 +44,10 @@ class newsletters extends Controller
             $newsToGet = new Newsletter();
             $newsToGet->setId($newsletter_id);
 
-            $newsletter = $this->model->get($newsToGet)[0];
+            $newsletter = $this->model->get($newsToGet);
+
+            if(is_null($newsletter))
+                header('Location: ' . APP . 'home/index');
 
             require APP . 'view/newsletters/preview.php';
         }else{
@@ -82,7 +88,10 @@ class newsletters extends Controller
         if(isset($user_id)){
             $userToGet = new User();
             $userToGet->setId($user_id);
-            $user = $this->model->get($userToGet)[0];
+            $user = $this->model->get($userToGet);
+
+            if(is_null($user))
+                header('Location: ' . APP . 'home/index');
 
             require APP. 'view/_templates/header.php';
             require APP. 'view/newsletters/new.php';
@@ -166,8 +175,11 @@ class newsletters extends Controller
             $newsToGet = new Newsletter();
             $newsToGet->setId($newsletter_id);
 
-            $user = $this->model->get($userToGet)[0];
-            $newsletter = $this->model->get($newsToGet)[0];
+            $user = $this->model->get($userToGet);
+            $newsletter = $this->model->get($newsToGet);
+
+            if(is_null($user) || is_null($newsletter))
+                header('Location: ' . APP . 'home/index');
 
             require APP . 'view/_templates/header.php';
             require APP . 'view/newsletters/edit.php';
@@ -186,8 +198,11 @@ class newsletters extends Controller
             $newsToGet = new Newsletter();
             $newsToGet->setId($newsletter_id);
 
-            $user = $this->model->get($userToGet)[0];
-            $newsletterToUpdate = $this->model->get($newsToGet)[0];
+            $user = $this->model->get($userToGet);
+            $newsletterToUpdate = $this->model->get($newsToGet);
+
+            if(is_null($user) || is_null($newsletterToUpdate))
+                header('Location: ' . APP . 'home/index');
 
             /* We now update the newsletter with the new information */
             $newsletterToUpdate->setTitle(Helper::sanitize($_POST['easy_title']));
